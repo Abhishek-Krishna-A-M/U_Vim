@@ -69,35 +69,35 @@ nvim
 ### Keybinds
 📁 File & Window Management
 
-- <C-s>	Save file
-- <leader>sn	Save file without formatting
-- <C-q>	Quit current file
-- <leader>e	Toggle Neo-tree file explorer
-- <leader>lw	Toggle line wrapping
-- <leader>v	Vertical split
-- <leader>h	Horizontal split
-- <leader>se	Equalize split sizes
-- <leader>xs	Close split
+- ctrl+s	Save file
+- space+sn	Save file without formatting
+- ctrl+q	Quit current file
+- space+e	Toggle Neo-tree file explorer
+- space+lw	Toggle line wrapping
+- space+v	Vertical split
+- space+h	Horizontal split
+- space+se	Equalize split sizes
+- space+xs	Close split
 
 📑 Buffer & Tab Management
 
-- <Tab>	Next buffer
-- <S-Tab>	Previous buffer
-- <leader>x	Close current buffer
-- <leader>b	New empty buffer
-- <leader>to	Open new tab
-- <leader>tx	Close current tab
-- <leader>tn	Next tab
-- <leader>tp	Previous tab
+- Tab	Next buffer
+- S-Tab	Previous buffer
+- space+x	Close current buffer
+- space+b	New empty buffer
+- space+to	Open new tab
+- space+tx	Close current tab
+- space+tn	Next tab
+- space+tp	Previous tab
 
 🧭 Navigation
 
-- <C-j/k/h/l>	Move between split windows
-- <C-d>	Scroll down and center
-- <C-u>	Scroll up and center
+- ctrl+j/k/h/l	Move between split windows
+- ctrl+d	Scroll down and center
+- ctrl+u	Scroll up and center
 - n / N	Next/Previous search (centered)
-- <C-Up/Down>	Resize window height
-- <C-Left/Right>	Resize window width
+- ctrl+Up/Down	Resize window height
+- ctrl+Left/Right	Resize window width
 
 ## Author
 
