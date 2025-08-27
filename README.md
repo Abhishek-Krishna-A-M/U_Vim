@@ -45,61 +45,61 @@ Before using U Vim, make sure the following are installed:
 
 ### 🐧 Linux & 🍎 macOS
 
-# Backup old config if it exists
+- Backup old config if it exists
 mv ~/.config/nvim 
 
-# Clone U Vim config
+- Clone U Vim config
 git clone https://github.com/yourusername/uvim ~/.config/nvim
 
-# Open Neovim (plugins will install on first launch)
+- Open Neovim (plugins will install on first launch)
 nvim
 
 ---
 
 ### Windows
-# Backup old config
+- Backup old config
 Rename-Item "$env:LOCALAPPDATA\nvim" -NewName "nvim_backup"
 
-# Clone U Vim config
+- Clone U Vim config
 git clone https://github.com/yourusername/uvim $env:LOCALAPPDATA\nvim
 
-# Launch Neovim
+- Launch Neovim
 nvim
 
 ### Keybinds
 📁 File & Window Management
-Keybind	Description
-<C-s>	Save file
-<leader>sn	Save file without formatting
-<C-q>	Quit current file
-<leader>e	Toggle Neo-tree file explorer
-<leader>lw	Toggle line wrapping
-<leader>v	Vertical split
-<leader>h	Horizontal split
-<leader>se	Equalize split sizes
-<leader>xs	Close split
+
+- <C-s>	Save file
+- <leader>sn	Save file without formatting
+- <C-q>	Quit current file
+- <leader>e	Toggle Neo-tree file explorer
+- <leader>lw	Toggle line wrapping
+- <leader>v	Vertical split
+- <leader>h	Horizontal split
+- <leader>se	Equalize split sizes
+- <leader>xs	Close split
 
 📑 Buffer & Tab Management
-Keybind	Description
-<Tab>	Next buffer
-<S-Tab>	Previous buffer
-<leader>x	Close current buffer
-<leader>b	New empty buffer
-<leader>to	Open new tab
-<leader>tx	Close current tab
-<leader>tn	Next tab
-<leader>tp	Previous tab
+
+- <Tab>	Next buffer
+- <S-Tab>	Previous buffer
+- <leader>x	Close current buffer
+- <leader>b	New empty buffer
+- <leader>to	Open new tab
+- <leader>tx	Close current tab
+- <leader>tn	Next tab
+- <leader>tp	Previous tab
 
 🧭 Navigation
-Keybind	Description
-<C-j/k/h/l>	Move between split windows
-<C-d>	Scroll down and center
-<C-u>	Scroll up and center
-n / N	Next/Previous search (centered)
-<C-Up/Down>	Resize window height
-<C-Left/Right>	Resize window width
 
-Author
+- <C-j/k/h/l>	Move between split windows
+- <C-d>	Scroll down and center
+- <C-u>	Scroll up and center
+- n / N	Next/Previous search (centered)
+- <C-Up/Down>	Resize window height
+- <C-Left/Right>	Resize window width
+
+## Author
 
 Made with ❤️ by Abhishek Krishna
 Feel free to fork, tweak, and share your own version.
