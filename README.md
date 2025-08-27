@@ -45,7 +45,6 @@ Before using U Vim, make sure the following are installed:
 
 ### 🐧 Linux & 🍎 macOS
 
-```bash
 # Backup old config if it exists
 mv ~/.config/nvim 
 
