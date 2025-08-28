@@ -1,4 +1,6 @@
 require 'config.keymaps'
+require 'config.options'
+require 'config.snippets'
 vim.g.have_nerd_font =true
 vim.o.number = true
 vim.o.mouse = 'a'
@@ -632,13 +634,6 @@ require('lazy').setup({
       indent = { enable = true, disable = { 'ruby' } },
     },
   },
-
-  require 'plugins.debug',
-  require 'plugins.indent_line',
-  require 'plugins.lint',
-  require 'plugins.autopairs',
-  require 'plugins.neo-tree',
-  require 'plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   { import = 'plugins' },
 }, {
