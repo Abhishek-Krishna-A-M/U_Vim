@@ -11,6 +11,9 @@ local opts = { noremap = true, silent = true }
 --Neotree toggle
 vim.keymap.set({'n','v','i'},'<leader>e',':Neotree toggle<CR>',opts)
 
+--Terminal launch
+vim.keymap.set('n','<leader>ts',':split | terminal<CR>',opts)
+
 -- save file
 vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
 
