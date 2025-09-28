@@ -2,7 +2,7 @@ vim.loader.enable()
 require 'config.keymaps'
 require 'config.options'
 require 'config.snippets'
-vim.g.have_nerd_font =true
+vim.g.have_nerd_font = true
 vim.o.number = true
 vim.o.mouse = 'a'
 vim.o.showmode = false
@@ -79,7 +79,8 @@ require('lazy').setup({
     },
   },
 
-  {     'folke/which-key.nvim',
+  {
+    'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
@@ -130,7 +131,6 @@ require('lazy').setup({
       },
     },
   },
-
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -246,10 +246,7 @@ require('lazy').setup({
       'saghen/blink.cmp',
     },
     config = function()
-      local lspconfig = require("lspconfig")
-
-      -- TypeScript/JavaScript
-      lspconfig.ts_ls.setup({
+      vim.lsp.config('ts_ls', {
         settings = {
           typescript = {
             suggest = { autoImports = true },
@@ -259,8 +256,9 @@ require('lazy').setup({
           },
         },
       })
+
       -- Python
-      lspconfig.pyright.setup({
+      vim.lsp.config('pyright', {
         settings = {
           python = {
             analysis = {
@@ -270,9 +268,33 @@ require('lazy').setup({
         },
       })
 
-      -- You can add other servers here 
-  
+      -- Lua (recognize `vim` global)
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' },
+            },
+          },
+        },
+      })
 
+      -- Java (if jdtls isn’t on $PATH, set cmd = {"/path/to/jdtls"} here)
+      vim.lsp.config('jdtls', {})
+
+      -- C / C++
+      vim.lsp.config('clangd', {})
+
+      ------------------------------------------------------------------------
+      -- Enable the servers
+      ------------------------------------------------------------------------
+      vim.lsp.enable 'ts_ls'
+      vim.lsp.enable 'pyright'
+      vim.lsp.enable 'lua_ls'
+      vim.lsp.enable 'jdtls'
+      vim.lsp.enable 'clangd'
+
+      -- You can add other servers here
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -669,18 +691,18 @@ require('lazy').setup({
   ui = {
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
+      config = '',
+      event = '',
+      ft = '󰉋',
       init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
+      keys = '',
+      plugin = '',
+      runtime = '󱦟',
+      require = '',
+      source = '󰎞',
+      start = '',
+      task = '',
+      lazy = '󰒲',
     },
   },
 })
