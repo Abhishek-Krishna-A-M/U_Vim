@@ -1,106 +1,172 @@
-# 🌀 U Vim
+# 🌀 U_Vim
 
-**U Vim** is a modular, fast, and minimal Neovim configuration built with Lua for modern development.  
-It focuses on simplicity, clean UI, and essential features like file tree navigation, buffer management, linting, git integration, and more.
+**U_Vim** is a **minimal, fast, and intentional Neovim configuration** written in Lua.  
+It is designed for developers who value **clarity, speed, and focus** over visual noise.
 
-U Vim works across **Linux**, **macOS**, and **Windows**.
+This repository contains **my personal Neovim setup**, structured modularly and tuned for a Vim-like editing experience with modern tooling where it matters.
+
+> "Sometimes minimal is better than fancy.  
+> Less noise. More thinking."
+
+U_Vim works on **Linux**, **macOS**, and **Windows**.
+
+---
+
+## ✨ Philosophy
+
+- ⚡ **Speed first** — fast startup, lazy-loaded plugins
+- 🧠 **Mental clarity** — calm UI, no visual clutter
+- ⌨️ **Keyboard-driven** — minimal mouse usage
+- 🧩 **Modular** — easy to understand, easy to modify
+- 🧱 **Vim-like discipline** with Neovim capabilities
+
+This is **not** a flashy distro.  
+It is a **tool you grow into**, not one that overwhelms you.
 
 ---
 
 ## ✨ Features
 
-- 🔁 **AutoSave** – Automatically saves files as you type or leave insert mode
-- 🪄 **AutoPairs** – Smart auto-pairing for brackets, quotes, etc.
-- 📂 **Neo-tree** – A clean, icon-friendly file explorer
-- 📑 **BufferLine** – Visual buffer/tab line with navigation and close buttons
-- 🧪 **Debugger Support** – Integrated `nvim-dap` setup
-- 📏 **Indent Guides** – Visual indent lines
-- 📊 **Lualine** – Fast and elegant statusline
-- 🌿 **Git Integration** – Real-time diff indicators with `gitsigns`
-- 🚦 **Linting** – Lightweight linting on save
-- 🚀 **Dashboard** – Start screen with shortcuts
-- ⚙️ **Misc Utilities** – Keymaps, performance tweaks, and more
+- 🔁 **AutoSave** – Automatically saves files when leaving insert mode
+- 🪄 **AutoPairs** – Smart pairing for brackets, quotes, etc.
+- 📂 **Neo-tree** – Clean file explorer (toggle when needed)
+- 📑 **BufferLine** – Simple buffer navigation
+- 📏 **Indent Guides** – Visual indentation support
+- 📊 **Lualine** – Lightweight statusline
+- 🌿 **Git Integration** – Git signs via `gitsigns.nvim`
+- 🚦 **Linting & Formatting** – Lightweight, on-demand
+- 🧠 **LSP Support** – For modern languages (JS, TS, C/C++, Go, Rust, Python, etc.)
+- 🎨 **Calm UI** – Builtin `habamax` colorscheme for long coding sessions
 
 ---
 
 ## 📋 Requirements
 
-Before using U Vim, make sure the following are installed:
-
-| Tool        | Description                        |
-|-------------|------------------------------------|
-| [Neovim](https://neovim.io) | Version 0.9+ (0.10+ recommended) |
-| [Git](https://git-scm.com) | For cloning the repo             |
-| [Nerd Font](https://www.nerdfonts.com/) | Recommended for icons |
-| `curl` or `wget` | For plugin manager installation (first run only) |
+| Tool | Description |
+|------|-------------|
+| **Neovim** | 0.9+ (0.10+ recommended) |
+| **Git** | Required to clone the repo |
+| **Nerd Font** | Optional (icons) |
+| **ripgrep** | Recommended for search |
+| **Node / Language toolchains** | Only if required by LSPs |
 
 ---
 
 ## 🖥️ Installation
 
-> U Vim is a drop-in replacement for your existing Neovim config.  
-> ⚠️ **Backup your current config** if needed.
+> ⚠️ **Backup your existing Neovim config** before installing.
+
+### 🐧 Linux / 🍎 macOS
+
+```bash
+# Backup existing config (if any)
+mv ~/.config/nvim ~/.config/nvim_backup
+
+# Clone U_Vim
+git clone https://github.com/Abhishek-Krishna-A-M/U_Vim.git ~/.config/nvim
+
+# Launch Neovim
+nvim
+```
+
+### 🪟 Windows (PowerShell)
+
+```powershell
+# Backup existing config (if any)
+Move-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim_backup
+
+# Clone U_Vim
+git clone https://github.com/Abhishek-Krishna-A-M/U_Vim.git $env:LOCALAPPDATA\nvim
+
+# Launch Neovim
+nvim
+```
 
 ---
 
-### 🐧 Linux & 🍎 macOS
+## ⌨️ Keybinds
 
-- Backup old config if it exists
-mv ~/.config/nvim 
+### 📁 File & Window Management
 
-- Clone U Vim config
-git clone https://github.com/yourusername/uvim ~/.config/nvim
+| Key | Action |
+|-----|--------|
+| `Ctrl + s` | Save file |
+| `<leader>sn` | Save without formatting |
+| `Ctrl + q` | Quit current file |
+| `<leader>e` | Toggle file explorer |
+| `<leader>lw` | Toggle line wrap |
+| `<leader>v` | Vertical split |
+| `<leader>h` | Horizontal split |
+| `<leader>se` | Equalize splits |
+| `<leader>xs` | Close split |
 
-- Open Neovim (plugins will install on first launch)
-nvim
+### 📑 Buffers & Tabs
+
+| Key | Action |
+|-----|--------|
+| `Tab` | Next buffer |
+| `Shift + Tab` | Previous buffer |
+| `<leader>x` | Close buffer |
+| `<leader>b` | New buffer |
+| `<leader>to` | New tab |
+| `<leader>tx` | Close tab |
+| `<leader>tn` | Next tab |
+| `<leader>tp` | Previous tab |
+
+### 🧭 Navigation
+
+| Key | Action |
+|-----|--------|
+| `Ctrl + h/j/k/l` | Move between splits |
+| `Ctrl + d / u` | Scroll & center |
+| `n / N` | Search next/prev (centered) |
+| `Ctrl + ↑ ↓` | Resize height |
+| `Ctrl + ← →` | Resize width |
 
 ---
 
-### Windows
-- Backup old config
-Rename-Item "$env:LOCALAPPDATA\nvim" -NewName "nvim_backup"
+## 🎨 Theme
 
-- Clone U Vim config
-git clone https://github.com/yourusername/uvim $env:LOCALAPPDATA\nvim
+U_Vim intentionally uses a builtin colorscheme:
 
-- Launch Neovim
-nvim
+```lua
+vim.cmd.colorscheme('habamax')
+```
 
-### Keybinds
-📁 File & Window Management
+**Why?**
 
-- ctrl+s	Save file
-- space+sn	Save file without formatting
-- ctrl+q	Quit current file
-- space+e	Toggle Neo-tree file explorer
-- space+lw	Toggle line wrapping
-- space+v	Vertical split
-- space+h	Horizontal split
-- space+se	Equalize split sizes
-- space+xs	Close split
+- Zero plugin overhead
+- Calm contrast for late-night coding
+- No visual fatigue
+- Vim-native and stable
 
-📑 Buffer & Tab Management
+---
 
-- Tab	Next buffer
-- S-Tab	Previous buffer
-- space+x	Close current buffer
-- space+b	New empty buffer
-- space+to	Open new tab
-- space+tx	Close current tab
-- space+tn	Next tab
-- space+tp	Previous tab
+## 👤 Author
 
-🧭 Navigation
+**Abhishek Krishna A M**
 
-- ctrl+j/k/h/l	Move between split windows
-- ctrl+d	Scroll down and center
-- ctrl+u	Scroll up and center
-- n / N	Next/Previous search (centered)
-- ctrl+Up/Down	Resize window height
-- ctrl+Left/Right	Resize window width
+Built with intention, refined through use.
 
-## Author
+Feel free to fork, simplify further, or adapt it to your workflow.
 
-Made with ❤️ by Abhishek Krishna
-Feel free to fork, tweak, and share your own version.
+**Minimal tools. Maximum focus.**
 
+---
+
+## 📄 License
+
+MIT License - Feel free to use and modify as needed.
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!  
+Feel free to check the [issues page](https://github.com/Abhishek-Krishna-A-M/U_Vim/issues).
+
+---
+
+## ⭐ Show Your Support
+
+Give a ⭐️ if this project helped you!
