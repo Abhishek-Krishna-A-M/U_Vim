@@ -1,53 +1,80 @@
--- Fast startup
--- Theme (builtin, night-friendly)
-vim.cmd.colorscheme('habamax')
+-- =====================================================================
+--  Neovim Init (Clean + Modular)
+--  Loads options, keymaps, snippets, and plugin modules from lua/
+-- =====================================================================
 
--- Small night tweaks
-vim.opt.termguicolors = true
-vim.opt.cursorline = false
+-- Leader keys
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
--- Calm diagnostics
-vim.diagnostic.config({
-  virtual_text = false,
-  underline = true,
-  signs = true,
-  float = { border = 'rounded' },
+-- Detect nerd font if you use one
+vim.g.have_nerd_font = false
+
+-- =====================================================================
+--  Core Settings (moved to lua/config/options.lua)
+-- =====================================================================
+require 'config.options'
+
+-- =====================================================================
+--  Keymaps (moved to lua/config/keymaps.lua)
+-- =====================================================================
+require 'config.keymaps'
+
+-- =====================================================================
+--  Snippets (your custom snippets)
+-- =====================================================================
+require 'config.snippets'
+
+-- =====================================================================
+--  Setup lazy.nvim plugin manager
+-- =====================================================================
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+end
+
+vim.opt.rtp:prepend(lazypath)
+
+-- =====================================================================
+--  Load plugins from lua/plugins/*
+-- =====================================================================
+require('lazy').setup('plugins', {
+  change_detection = { notify = false },
+
+  ui = {
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤',
+    },
+  },
 })
-vim.loader.enable()
-vim.opt.shortmess:append("I")
-vim.api.nvim_create_autocmd("VimEnter", {
+
+-- =====================================================================
+--  Autocommands (optional: add your own in lua/config/autocmds.lua)
+-- =====================================================================
+local group = vim.api.nvim_create_augroup('HighlightYank', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = group,
+  desc = 'Highlight text after yanking',
   callback = function()
-    if vim.fn.argc() == 0 then
-      vim.cmd("Ex")
-    end
+    vim.highlight.on_yank()
   end,
 })
 
--- Load core config
-require('config.options')
-require('config.keymaps')
-require('config.snippets')
-
--- Lazy.nvim bootstrap
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
--- Load plugins
-require('lazy').setup(
-  { import = 'plugins' },
-  {
-    defaults = { lazy = true },
-    checker = { enabled = false },
-    change_detection = { enabled = false },
-  }
-)
-
+-- =====================================================================
+--  Modeline
+-- =====================================================================
+-- vim: ts=2 sts=2 sw=2 et
