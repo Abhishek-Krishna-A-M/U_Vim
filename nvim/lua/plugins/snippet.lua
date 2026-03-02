@@ -1,10 +1,10 @@
-return{
+return {
   "L3MON4D3/LuaSnip",
-  dependancies = {
-    "rafamadriz/friendly-snippets"
+  dependencies = {
+    "rafamadriz/friendly-snippets",
   },
+  event = "InsertEnter",
   config = function()
-    local luasnip = require('luasnip')
     require("luasnip.loaders.from_vscode").lazy_load()
-  end
+  end,
 }

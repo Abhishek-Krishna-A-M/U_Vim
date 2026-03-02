@@ -1,98 +1,182 @@
 return {
-  'neovim/nvim-lspconfig',
-  event = 'BufReadPre',
-  dependencies = {
-    { 'mason-org/mason.nvim', opts = {} }, -- optional, harmless
-    'mason-org/mason-lspconfig.nvim',
-  },
+  "neovim/nvim-lspconfig",
+  event = { "BufReadPre", "BufNewFile" },
+
   config = function()
-    -- Common on_attach
-    local function on_attach(_, bufnr)
-      local map = function(lhs, rhs)
-        vim.keymap.set('n', lhs, rhs, { buffer = bufnr, silent = true })
+    ------------------------------------------------------------------
+    -- DIAGNOSTICS
+    ------------------------------------------------------------------
+    vim.diagnostic.config({
+      virtual_text = false,
+      signs = true,
+      underline = true,
+      severity_sort = true,
+      update_in_insert = false,
+      float = {
+        border = "rounded",
+        source = "if_many",
+      },
+    })
+
+    ------------------------------------------------------------------
+    -- ON_ATTACH
+    ------------------------------------------------------------------
+    local on_attach = function(_, bufnr)
+      local map = function(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, {
+          buffer = bufnr,
+          silent = true,
+          desc = desc,
+        })
       end
-      map('gd', vim.lsp.buf.definition)
-      map('gr', vim.lsp.buf.references)
-      map('K', vim.lsp.buf.hover)
-      map('<leader>rn', vim.lsp.buf.rename)
-      map('<leader>ca', vim.lsp.buf.code_action)
+
+      map("n", "gd", vim.lsp.buf.definition, "Go to definition")
+      map("n", "gr", vim.lsp.buf.references, "Find references")
+      map("n", "gi", vim.lsp.buf.implementation, "Go to implementation")
+      map("n", "K", vim.lsp.buf.hover, "Hover documentation")
+
+      map("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+      map("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+
+      map("n", "<leader>d", vim.diagnostic.open_float, "Line diagnostics")
+      map("n", "[d", function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end, "Previous diagnostic")
+      map("n", "]d", function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end, "Next diagnostic")
+
+      map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature help")
     end
 
-    -- =========================
-    -- LSP CONFIGURATIONS
-    -- =========================
+    ------------------------------------------------------------------
+    -- CAPABILITIES
+    ------------------------------------------------------------------
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-    -- JS / TS / React
-    vim.lsp.config('ts_ls', {
+    ------------------------------------------------------------------
+    -- LSP CONFIG HELPER
+    ------------------------------------------------------------------
+    local lsp = vim.lsp.config
+
+    ------------------------------------------------------------------
+    -- LUA
+    ------------------------------------------------------------------
+    lsp("lua_ls", {
       on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        Lua = {
+          diagnostics = { globals = { "vim" } },
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
+        },
+      },
+    })
+
+    ------------------------------------------------------------------
+    -- TYPESCRIPT / JAVASCRIPT  (YOUR CUSTOM BLOCK)
+    ------------------------------------------------------------------
+    lsp("ts_ls", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+
+      cmd = { "typescript-language-server", "--stdio" },
+
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+      },
+
+      root_markers = {
+        "tsconfig.json",
+        "jsconfig.json",
+        "package.json",
+        ".git",
+      },
+
+      single_file_support = true,
+
+      init_options = {
+        hostInfo = "neovim",
+      },
+
       settings = {
         typescript = { suggest = { autoImports = true } },
         javascript = { suggest = { autoImports = true } },
       },
     })
 
-    -- Lua
-    vim.lsp.config('lua_ls', {
+    ------------------------------------------------------------------
+    -- PYTHON
+    ------------------------------------------------------------------
+    lsp("pyright", {
       on_attach = on_attach,
-      settings = {
-        Lua = {
-          diagnostics = { globals = { 'vim' } },
-        },
-      },
-    })
-
-    -- Python
-    vim.lsp.config('pyright', {
-      on_attach = on_attach,
+      capabilities = capabilities,
       settings = {
         python = {
           analysis = {
+            typeCheckingMode = "basic",
             autoImportCompletions = true,
-            typeCheckingMode = 'basic', -- fast, low-noise
           },
         },
       },
     })
 
-    -- HTML
-    vim.lsp.config('html', { on_attach = on_attach })
+    ------------------------------------------------------------------
+    -- WEB
+    ------------------------------------------------------------------
+    lsp("html", { on_attach = on_attach, capabilities = capabilities })
+    lsp("cssls", { on_attach = on_attach, capabilities = capabilities })
+    lsp("jsonls", { on_attach = on_attach, capabilities = capabilities })
 
-    -- CSS
-    vim.lsp.config('cssls', { on_attach = on_attach })
+    lsp("tailwindcss", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
 
-    -- Tailwind CSS
-    vim.lsp.config('tailwindcss', { on_attach = on_attach })
-
-    -- JSON
-    vim.lsp.config('jsonls', { on_attach = on_attach })
-
+    ------------------------------------------------------------------
     -- C / C++
-    vim.lsp.config('clangd', { on_attach = on_attach })
+    ------------------------------------------------------------------
+    lsp("clangd", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
 
-    -- Java
-    vim.lsp.config('jdtls', { on_attach = on_attach })
+    ------------------------------------------------------------------
+    -- JAVA
+    ------------------------------------------------------------------
+    lsp("jdtls", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
 
-    -- Go
-    vim.lsp.config('gopls', { on_attach = on_attach })
+    ------------------------------------------------------------------
+    -- GO
+    ------------------------------------------------------------------
+    lsp("gopls", {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
 
-    -- Rust
-    vim.lsp.config('rust_analyzer', { on_attach = on_attach })
-
-    -- =========================
+    ------------------------------------------------------------------
     -- ENABLE SERVERS
-    -- =========================
+    ------------------------------------------------------------------
     vim.lsp.enable({
-      'ts_ls',
-      'lua_ls',
-      'pyright',
-      'html',
-      'cssls',
-      'tailwindcss',
-      'jsonls',
-      'clangd',
-      'jdtls',
-      'gopls',
-      'rust_analyzer',
+      "lua_ls",
+      "ts_ls",
+      "pyright",
+      "html",
+      "cssls",
+      "jsonls",
+      "tailwindcss",
+      "clangd",
+      "jdtls",
+      "gopls",
     })
   end,
 }

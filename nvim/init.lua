@@ -6,6 +6,9 @@
 -- Leader keys
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- Disable netrw (required for Oil)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Detect nerd font if you use one
 vim.g.have_nerd_font = false

@@ -1,43 +1,20 @@
 return {
-  'nvim-telescope/telescope.nvim',
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  "nvim-telescope/telescope.nvim",
+  cmd = "Telescope",
+  dependencies = { "nvim-lua/plenary.nvim" },
 
   keys = {
-    {
-      '<leader>ff',
-      function()
-        require('telescope.builtin').find_files()
-      end,
-      desc = 'Find files',
-    },
-    {
-      '<leader>fg',
-      function()
-        require('telescope.builtin').live_grep()
-      end,
-      desc = 'Live grep',
-    },
-    {
-      '<leader>fb',
-      function()
-        require('telescope.builtin').buffers()
-      end,
-      desc = 'Buffers',
-    },
-    {
-      '<leader>fh',
-      function()
-        require('telescope.builtin').help_tags()
-      end,
-      desc = 'Help',
-    },
+    { "<leader>ff", function() require("telescope.builtin").find_files() end },
+    { "<leader>fg", function() require("telescope.builtin").live_grep() end },
+    { "<leader>fb", function() require("telescope.builtin").buffers() end },
+    { "<leader>fh", function() require("telescope.builtin").help_tags() end },
   },
 
-  config = function()
-    require('telescope').setup({
-      defaults = {
-        preview = false, -- ⚡ faster, low RAM friendly
-      },
-    })
-  end,
+  opts = {
+defaults = {
+  preview = true,
+  sorting_strategy = "ascending",
+  layout_config = { prompt_position = "top" },
+},
+  },
 }
